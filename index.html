@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Sakker Blogger</title>
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/style.css">
+  <!--<link type="text/css" rel="stylesheet" href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css"/>-->
+  <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"/> 
+  <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css"/> 
+  <link rel="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css"/>
+
+</head>
+<body>
+<script type="text/x-handlebars" data-template-name="application">
+    <H3>Welcome to Sakker`s Blog</H3>
+    {{outlet}}
+</script>
+<script type="text/x-handlebars" data-template-name="blogs">
+       <div class="row">
+           <div class="col-md-3">
+               <div class="list-group">
+                   {{#each}}
+                       {{#link-to 'blogs.blog' id class="list-group-item"}} {{title}} {{/link-to}}
+                   {{/each}}
+               </div>
+           </div>
+           <div class="col-md-4">
+          		{{outlet}}
+           </div>
+       </div>
+</script>
+<script type="text/x-handlebars" data-template-name="blogs/blog">
+	 {{#if isEditing}}
+	 {{! only using 'partial' works here below because iff 'render' is used then it will have its own controller
+		and therefore the 'title' and 'longIntro' will not be understood by the BlogsBlogController}}
+		      	{{#if isNewBlog}}
+      				{{partial 'newBlogTemplate'}}
+      			{{else}}
+           			{{partial 'blogEditTemplate'}}
+           		{{/if}}
+      {{else}}
+
+           		{{partial 'blogInfoTemplate'}}
+     {{/if}}
+</script>
+<script type="text/x-handlebars" data-template-name="blogInfoTemplate">
+		<button class="btn btn-info btn-xs" {{action 'editBlog'}}>Edit</button>
+		<button class="btn btn-info btn-xs" {{action 'newBlog'}}>New</button>
+		<H3>{{title}}</H3>
+		<H5>{{longIntro}}</H5>
+</script>
+<script type="text/x-handlebars" data-template-name="blogEditTemplate">
+		{{view Ember.TextField valueBinding="title" class="form-control"}} </br>
+		{{view Ember.TextArea valueBinding="longIntro" class="form-control"}}
+		<button class="btn btn-success" {{action 'saveBlog' id}}>Save</button>
+		<button class="btn btn-success" {{action 'cancelEdit' id}}>Cancel</button>
+</script>
+</script>
+<script type="text/x-handlebars" data-template-name="newBlogTemplate">
+		{{view Ember.TextField valueBinding="newTitle" class="form-control"}} </br>
+		{{view Ember.TextArea valueBinding="newLongIntro" class="form-control"}}
+		<button class="btn btn-warning" {{action 'newBlogSave'}}>Save</button>
+		<button class="btn btn-warning" {{action 'cancelSave'}}>Cancel</button>	
+</script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+  <script src="http://builds.emberjs.com/handlebars-1.0.0.js"></script>
+  <script src="http://builds.emberjs.com/ember-latest.js"></script>
+  <script src="http://builds.emberjs.com/beta/ember-data.js"></script>
+  <script src="js/lib/ember-local-storage-adapter.js"></script>
+  <script src="app.js"></script>
+
+</body>
+</html>
