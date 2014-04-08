@@ -87,7 +87,7 @@ Sakker.BlogsBlogController = Ember.ObjectController.extend({
         this.set('isEditing', false);
         title1 = this.get('newTitle').trim();
         longIntro1 = this.get('newLongIntro').trim();
-        Ember.debug("Values from the blog-->>"+col1+" & "+col2);
+        Ember.debug("Values from the blog-->>"+title1+" & "+longIntro1);
         if(title1 && longIntro1){
             var newRecord1 = this.store.createRecord('blog', {
             title: title1,
